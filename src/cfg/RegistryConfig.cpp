@@ -1,6 +1,7 @@
 
 #include <minIni.h>
 #include <filesystem>
+#include <spdlog/spdlog.h>
 #include "WritableConfig.hpp"
 
 #ifdef WIN32
@@ -76,6 +77,7 @@ namespace ehb
                     if (value.empty())
                     {
                         // couldn't find windows registry key in wine... no problem, app just not installed
+                        spdlog::get("filesystem")->error("Unable to location Dungeon Siege installation on WINE");
                     }
                     else
                     {
@@ -99,7 +101,7 @@ namespace ehb
             }
             else
             {
-                // TODO: output error about system.reg missing
+                spdlog::get("filesystem")->error("Unable to find system.reg for WINE configuration");
             }
         }
     }
